@@ -101,6 +101,46 @@ source $ZSH/oh-my-zsh.sh
 # GPG TTY configuration for commit signing
 export GPG_TTY=$(tty)
 
+# GPG Agent configuration for Homebrew GPG
+# Configure gpg-agent.conf if it doesn't exist or is empty
+if [ ! -s ~/.gnupg/gpg-agent.conf ]; then
+  # Check if pinentry-mac is available (better for macOS)
+  if command -v pinentry-mac > /dev/null 2>&1; then
+    PINENTRY_PROGRAM="pinentry-mac"
+  elif command -v pinentry-tty > /dev/null 2>&1; then
+    PINENTRY_PROGRAM="pinentry-tty"
+  else
+    PINENTRY_PROGRAM="pinentry"
+  fi
+  
+  # Get full path to pinentry
+  PINENTRY_PATH=$(which $PINENTRY_PROGRAM 2>/dev/null)
+  
+  if [ -n "$PINENTRY_PATH" ]; then
+    cat > ~/.gnupg/gpg-agent.conf << EOF
+# GPG Agent configuration for Homebrew GPG
+# Pinentry program path (required for Homebrew GPG)
+pinentry-program $PINENTRY_PATH
+
+# Cache passphrase for 1 hour
+default-cache-ttl 3600
+max-cache-ttl 3600
+
+# Allow loopback pinentry mode for better terminal compatibility
+allow-loopback-pinentry
+EOF
+    # Restart gpg-agent to apply new config
+    gpgconf --kill gpg-agent > /dev/null 2>&1
+  fi
+fi
+
+# Start gpg-agent if it's not already running
+gpgconf --launch gpg-agent > /dev/null 2>&1
+
+# Refresh GPG TTY in case of new terminal sessions
+# This ensures GPG can prompt for passphrase in the current terminal
+gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment

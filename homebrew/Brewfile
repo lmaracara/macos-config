@@ -1,19 +1,15 @@
-# Development Tools
 brew "awscli"
+brew "bat"
 brew "colima"
 brew "docker"
-brew "gnupg"
-brew "nvm"
-brew "lazygit"
-brew "terraform"
-brew "neovim"
-
-# Terminal Tools (for zsh configuration)
-brew "bat"
 brew "fzf"
+brew "gnupg"
+brew "lazygit"
+brew "neovim"
+brew "nvm"
+brew "pinentry-mac"
+brew "terraform"
 brew "thefuck"
-
-# Applications
 cask "1password"
 cask "cursor"
 cask "google-chrome"
