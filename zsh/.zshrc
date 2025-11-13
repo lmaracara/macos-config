@@ -86,6 +86,11 @@ plugins=(
 	you-should-use
 	zsh-bat
 	thefuck
+	aws
+	docker
+	docker-compose
+	terraform
+	kubectl
 )
 
 
@@ -146,7 +151,6 @@ applyTWConfigurations(){
 	git config --global user.name "Luis Maracara"
 	git config --global user.email "luis.maracara@thoughtworks.com"
 	git config --global commit.gpgsign true
-	git config --global user.signingkey D6553E08D9041A8F
 	git config --global gpg.program gpg
 
   export GITHUB_API_TOKEN= # Generate it
