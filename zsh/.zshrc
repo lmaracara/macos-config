@@ -39,6 +39,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
 
+# Other configurations
+zstyle ':completion:*:*:make:*' call-command true
+
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
 
@@ -243,3 +246,4 @@ export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
   [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh"
 
 
+export PATH="$HOME/bin:$PATH"
